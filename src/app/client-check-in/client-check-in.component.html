@@ -1,0 +1,177 @@
+<h1>Client check-in</h1>
+<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+  {{ !isLinear ? "Enable linear mode" : "Disable linear mode" }}
+</button>
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <div
+      style="text-align: center; background-color: rgb(238, 255, 0); margin: 3%"
+    >
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Fill out personal details</ng-template>
+        <div>
+          <mat-form-field>
+            <mat-label>First name</mat-label>
+            <input
+              matInput
+              [(ngModel)]="clientDetails.person.firstName"
+              placeholder="First name"
+              formControlName="txtFirstName"
+              required
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>Last name</mat-label>
+            <input
+              matInput
+              placeholder="Last name"
+              [(ngModel)]="clientDetails.person.lastName"
+              formControlName="txtLastName"
+              required
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              placeholder="Email"
+              [(ngModel)]="clientDetails.person.email"
+              formControlName="txtEmail"
+              required
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+      </form>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" label="Select your coach">
+    <div
+      style="text-align: center; background-color: rgb(238, 255, 0); margin: 3%"
+    >
+      <form [formGroup]="secondFormGroup">
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Coach</mat-label>
+            <mat-select
+              matNativeControl
+              formControlName="optCoach"
+              [(value)]="clientDetails.coach.name"
+            >
+              <mat-option value="John">John</mat-option>
+              <mat-option value="SPB">SPB</mat-option>
+              <mat-option value="Balu">Balu</mat-option>
+              <mat-option value="Subrahmanyam">Subrahmanyam</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-raised-button color="primary" matStepperPrevious>
+            Back</button
+          >&nbsp;
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+      </form>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="thirdFormGroup" label="Fill your medication details">
+    <div
+      style="text-align: center; background-color: rgb(238, 255, 0); margin: 3%"
+    >
+      <form [formGroup]="thirdFormGroup">
+        <div>
+          <mat-form-field>
+            <mat-label>Medication name</mat-label>
+            <input
+              matInput
+              [(ngModel)]="clientDetails.medications[0].name"
+              placeholder="Medication name"
+              formControlName="txtMedName"
+              required
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>Dosage</mat-label>
+            <input
+              matInput
+              [(ngModel)]="clientDetails.medications[0].dosage"
+              placeholder="Dosage"
+              formControlName="txtDosage"
+              required
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select
+              matNativeControl
+              [(value)]="clientDetails.medications[0].type"
+              formControlName="optMedType"
+            >
+              <mat-option value="Prescription">Prescription</mat-option>
+              <mat-option value="OTC">OTC</mat-option>
+              <mat-option value="Supplement">Supplement</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-raised-button color="primary" matStepperPrevious>
+            Back
+          </button>
+          &nbsp;
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+      </form>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Review and submit</ng-template>
+    <div
+      style="text-align: center; background-color: rgb(238, 255, 0); margin: 3%"
+    >
+      <div style="text-align: left; margin-left: 40%">
+        <h2>Please review the details and submit.</h2>
+        <h3><b>Personal details.</b></h3>
+        Firstname: {{ clientDetails.person.firstName }} <br />Lastname:
+        {{ clientDetails.person.lastName }} <br />Email:{{
+          clientDetails.person.email
+        }}
+        <br />
+        <br />
+        <h3><b>Coach details.</b></h3>
+        Coach: {{ clientDetails.coach.name }} <br />
+        <br />
+        <br />
+        <h3><b>Medication details.</b></h3>
+        Mediation name: {{ clientDetails.medications[0].name }} <br />Mediation
+        type: {{ clientDetails.medications[0].type }} <br />Mediation dosage:
+        {{ clientDetails.medications[0].dosage }}
+        <br />
+        <br />
+      </div>
+
+      <div>
+        <button mat-raised-button color="primary" matStepperPrevious>
+          Back
+        </button>
+        &nbsp;
+        <button mat-raised-button color="primary" (click)="btnSubmit()">
+          submit
+        </button>
+        &nbsp;
+        <button mat-raised-button color="primary" (click)="stepper.reset()">
+          Reset
+        </button>
+      </div>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
